@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 /**
  * Expose `requires`.
  */
@@ -37,4 +37,15 @@ function map(str, fn) {
   });
 
   return str;
+}
+
+if (!module.parent) {
+  var files = process.argv.slice(2);
+  var read = require("fs").readFileSync;
+  files.forEach(function (f) {
+    var str = read(f).toString();
+    requires(str, function (r) {
+      console.log(r.path)
+   })
+  })
 }
